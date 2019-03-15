@@ -11,6 +11,13 @@
 	</head>
 	<body>
 		<div class="container" id="container">
+			<!-- 提示框 -->
+			<div class="tipWin" id="tipWin">
+				<div id="tips" class="jz cz">
+					<!--<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/app/icon1_30_1@2x.png" alt="" />-->
+					<p id=""></p>
+				</div>
+			</div>
 			<!--选择颜色-->
 			<div class='choice col'>
 				<p class='txt'>选择颜色：</p>
@@ -20,7 +27,7 @@
 			</div>
 			<!-- 故障详情 -->
 			<div class='problem'>
-				<p class='txt'>故障详情</p>
+				<p class='txt'>故障详情：</p>
 				<div id="chooseFault">
 					<!--模板二-->
 				</div>
@@ -31,12 +38,14 @@
 		</div>
 		</div>
 		<script src="js/jquery-1.12.4.js"></script>
+		<script src="js/commom.js"></script>
 		<script src="js/artTemplate/template-web.js"></script>
+		<script src="js/public.js"></script>
 		<script src="js/phonefaulth.js"></script>
 		<script type="text/html" id="tpl1">
 			{{each data v i}}
 			<div class='jz pr' id="selColor">
-				<span>{{v.serviceName}}</span>
+				<span data-serviceId="{{v.share.id}}">{{v.share.name}}</span>
 				<img class="img" src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon8_1@2x.png" alt="" />
 			</div>
 			{{/each}}
@@ -44,8 +53,8 @@
 		<script type="text/html" id="tpl2">
 			{{each data v i}}
 			<div class="pr fault bt" id="selFault">
-				<span data-partsId="{{v.partsId}}">{{v.partsName}}</span>
-				<p class='price'>¥<span id="price">{{v.partsEellout}}</span></p>
+				<span data-partsId="{{v.id}}">{{v.name}}</span>
+				<p class='price'>¥<span id="price">{{v.eellout}}</span></p>
 				<img class="" src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_21@2x.png" alt="" id="faultPic" />
 			</div>
 			{{/each}}

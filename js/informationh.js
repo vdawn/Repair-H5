@@ -1,134 +1,141 @@
-$(function() {
-	var name;
-	var phone;
-	var code;
-	var address;
-	var countdown = 60;
-	var model = localStorage.getItem('model');
-	var serviceid = localStorage.getItem('serviceid');
-	var moreFault = JSON.parse(localStorage.getItem('moreFault'));
-	var moreFaultid = JSON.parse(localStorage.getItem('moreFaultid'));
-	var priceAll = localStorage.getItem('priceAll');
-	console.log(model)
-	console.log(serviceid)
-	console.log(moreFault)
-	console.log(moreFaultid)
-	console.log(priceAll)
-	$("#modelText").html(localStorage.getItem('model'))
-	$("#priceAll").html(localStorage.getItem('priceAll'))
-
-	$("#moreFault").html(template("tpl1", {
-		moreFault: moreFault
-	}))
-	$("#name").blur(function() {
-		name = $("#name").val()
-	})
-	$("#phone").blur(function() {
-		phone = $("#phone").val()
-	})
-	$("#code").blur(function() {
-		code = $("#code").val()
-	})
-	$("#ad").blur(function() {
-		address = $("#ad").val()
-	})
-	$("#saveCode").click(function() {
-			var obj = $("#saveCode");
-			if (phone == "" || phone == undefined) {
-				$("#phoneTips").children('span').text("! 手机号不能为空");
-				setTimeout(function() {
-					$("#phoneTips").children('span').text("");
-				}, 3000);
+function setTitle() {
+	window.location.href = "om_protocol://setTitle(一盟快修)"
+}
+function LoadUserInfo() {
+	window.location.href = "om_protocol://getUserInfo"
+}
+//修改地址后，供ios回调
+function setAddressInfo(info) {
+	LoadUserInfo();
+}
+function setUserInfo(userInfo, token) {
+	
+	//添加地址
+		$("#firstAdd").click(function() {
+			if (token == "" || token == null || token == undefined) {
+				login();
 			} else {
-				settime(obj);
-				$.ajax({
-					url: 'https://www.topfix.cn/repair-api/sms/out',
-					type: "POST",
-					xhrFields: {      
-						withCredentials: true    
-					},
-					crossDomain: true,
-					data: {
-						Phone: phone,
-					},
-					success: function(data) {
-						console.log("获取验证码"+data)
-					}
-				});
+				editAddressInfo();
+			}
+		});
+	if (token != "" && token != null && token != undefined) {
+		//	$("#aaa").html(userInfo)
+		//地址修改
+		$("#address").click(function() {
+			editAddressInfo();
+		});
+		// 判断有无地址-地址显示
+		if (JSON.parse(userInfo).address == null || JSON.parse(userInfo).address == "" || JSON.parse(userInfo).address == undefined) {
+			$("#address").css('display', 'none');
+			$("#firstAdd").css('display', 'block');
+		} else {
+			$("#address").css('display', 'block');
+			$("#firstAdd").css('display', 'none');
+		}
+		//判断显示用户地址，信息
+		if (JSON.parse(userInfo).ymAddress != null && JSON.parse(userInfo).ymAddress != "" && JSON.parse(userInfo).ymAddress != undefined) {
+			var userAddress1 = JSON.parse(userInfo).ymAddress.city.parentCity.parentCity.name; //省
+			var userAddress2 = JSON.parse(userInfo).ymAddress.city.parentCity.name; //市
+			var userAddress3 = JSON.parse(userInfo).ymAddress.city.name; //区
+			var userAddress4 = JSON.parse(userInfo).ymAddress.detailed; //详细
+			if ((userAddress1 != null && userAddress1 != "" && userAddress1 != undefined) && (userAddress4 != null && userAddress4 != "" && userAddress4 != undefined)) {
+				var userAddress = userAddress1 + userAddress2 + userAddress3 + userAddress4;
+				$("#addInfo").html(userAddress);
+			}
+			var userName = JSON.parse(userInfo).ymAddress.name;
+			var useSex = JSON.parse(userInfo).ymAddress.sex;
+			if (userName != null && userName != "" && userName != undefined) {
+				$("#userName").html(userName);
+			}
+			if (useSex != null && useSex != "" && useSex != undefined) {
+				$("#sex").html(useSex);
+			}
+		}
+		var equipmentId = localStorage.getItem('equipmentId'); //设备区分id
+		var model = localStorage.getItem('model'); //设备机型
+		var serviceid = localStorage.getItem('serviceid'); //设备机型对应id
+		var moreFaultid = JSON.parse(localStorage.getItem('moreFaultid')); //故障id
+		var priceAll = localStorage.getItem('priceAll'); //价格
+		var color = JSON.parse(localStorage.getItem('color'));
+		var colorid = JSON.parse(localStorage.getItem('colorid'));
+		//确定下单
+		$("#finish").click(function() {
+			if (token == "" || token == null || token == undefined) {
+				login();
+			}
+			if (JSON.parse(userInfo).ymAddress == null || JSON.parse(userInfo).ymAddress == "" || JSON.parse(userInfo).ymAddress == undefined) {
+                $("#tipWin").css('display', 'block');
+                $("#tips").text('请添加地址');
+                setTimeout(function() {
+                    $("#tipWin").css('display', 'none');
+                }, 2000);
+			} else {
+                var userAddress1 = JSON.parse(userInfo).ymAddress.city.parentCity.parentCity.name; //省
+                var userAddress2 = JSON.parse(userInfo).ymAddress.city.parentCity.name; //市
+                var userAddress3 = JSON.parse(userInfo).ymAddress.city.name; //区
+                var userAddress4 = JSON.parse(userInfo).ymAddress.detailed; //详细
+                if ((userAddress1 != null && userAddress1 != "" && userAddress1 != undefined) && (userAddress4 != null && userAddress4 != "" && userAddress4 != undefined)) {
+                    //$("#aaa").html(userAddress1 + userAddress2 + userAddress3 + userAddress4);
+                    $.ajax({
+                        url: url+'order/add',
+                        type: "POST",
+                        headers: {
+                            "token": token
+                        },
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            "order": {
+                                "servicePid": equipmentId, //设备区分
+                                "serviceId": serviceid, //设备id
+                                "serviceColour": colorid, //颜色id
+                                "address": userAddress1 + userAddress2 + userAddress3 + userAddress4,
+                                "userId": JSON.parse(userInfo).id
+                            },
+                            "partsidArr": moreFaultid, //故障id
+                            "source": "APP订单"
+                        }),
+                        success: function(data) {
+                            if (data.message == "Ok") {
+                                window.location.href = "finishh.html"
+                                localStorage.setItem('colorid', JSON.stringify("待客服沟通确定"));
+                            }
+                        }
+                    });
+                }
+
 			}
 		})
-		//确定下单
-	$("#confirm").click(function() {
-		//获取地区
-		var selectArea = $('#selectArea option:selected').text();
-		if (code == "" || code == undefined) {
-			$("#codeTips").children('span').text("! 验证码不能为空");
-			setTimeout(function() {
-				$("#codeTips").children('span').text("");
-			}, 3000);
-		} else {
-			$.ajax({
-				url: 'https://www.topfix.cn/repair-api/sms/Verification',
-				xhrFields: {      
-					withCredentials: true    
-				},
-				crossDomain: true,
-				type: "POST",
-				data: {
-					Verification: code,
-				},
-				success: function(data) {
-				    console.log("校验验证码" + data)
-					if (data == "ok") {
-						var datas = {
-							"serviceid": serviceid, //机型对应的id
-							"prices": priceAll, //总价
-							"partsidArr": moreFaultid, //故障类型id
-							"name": name, //姓名
-							"address": selectArea + address //地区+详细地址
-						}
-						$.ajax({
-							url: 'https://www.topfix.cn/repair-api/order/add',
-							type: "POST",
-							headers: {
-								"Content-Type": "application/json;charset=utf-8",
-							},
-							xhrFields: {      
-								withCredentials: true    
-							},
-							crossDomain: true,
-							//							dataType: 'json',
-							data: JSON.stringify(datas),
-							success: function(data) {
-								console.log(data)
-								if (data == "ok") {
-									location.href = "finishh.html";
-								}
-							}
-						});
-					} else {
-						$("#codeTips").children('span').text("! 验证码错误，请重新发送");
-					}
-				}
-			});
-		}
-	})
+		showBackButton();
 
-	function settime(obj) { //发送验证码倒计时
-		if (countdown == 0) {
-			obj.attr('disabled', false);
-			//obj.removeattr("disabled"); 
-			obj.val("获取验证码");
-			countdown = 60;
-			return;
-		} else {
-			obj.attr('disabled', true);
-			obj.val("重新发送(" + countdown + ")");
-			countdown--;
-		}
-		setTimeout(function() {
-			settime(obj)
-		}, 1000)
+	} else {
+		//确定下单
+		$("#finish").click(function() {
+			login();
+		});
 	}
 
-})
+}
+
+$(function() {
+	LoadUserInfo();
+	setTimeout("setTitle()", 100);
+	var moreFault = JSON.parse(localStorage.getItem('moreFault')); //故障
+    var moreFaultPrice = JSON.parse(localStorage.getItem('moreFaultPrice'));
+	$("#modelText").html(localStorage.getItem('model'))
+	$("#priceAll").html(localStorage.getItem('priceAll'))
+	$("#moreFault").html(template("tpl1", {
+		moreFault: moreFault
+	}));
+	$("#moreFaultPrice").html(template("tpl2", {
+		moreFaultPrice: moreFaultPrice
+	}));
+	//勾选协议
+	$(".checkbox").click(function() {
+		if (this.checked) {
+			$('#confirm').attr("disabled", false);
+		} else {
+			$('#confirm').attr("disabled", "disabled");
+		}
+	});
+
+});

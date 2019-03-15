@@ -1,5 +1,9 @@
+function setTitle() {
+	window.location.href = "om_protocol://setTitle(一盟快修)"
+}
 $(function() {
-	//通过url截取sign
+	showBackButton();
+	setTimeout("setTitle()", 100);
 	var faultLoc = location.href;
 	var n3 = faultLoc.substr(faultLoc.indexOf('?') + 1);
 	var sign = n3.substr(n3.indexOf('=') + 1);

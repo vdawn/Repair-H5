@@ -14,13 +14,12 @@
 		<link rel="stylesheet" type="text/css" href="css/indexh.css" />
 	</head>
 	<body>
+<!-- 	    1 <p id="aaa"></p>
+	    2 <p id="bbb"></p>
+	    3 <p id="ccc"></p> -->
 		<div class="container">
-			<div class='bt advertisement'>
-				<div class="sp leftPic"><img src='https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/logo1@2x.png' alt="一盟快修，专注匠心" /></div>
-				<a class="sp" href="tel:400-811-5111">400-811-5111</a>
-			</div>
 			<div class="cz banner">
-				<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/banner@2x.png" alt="400-811-5111" />
+				<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/app/banner%402x.png" alt="一盟快修" />
 			</div>
 			<!--广告条-->
 			<div class="ad">
@@ -85,59 +84,38 @@
 					</a>
 				</div>
 				<div class="col sp son">
-					<a class="col sp" href="otherh.html">
+					<a class="col sp" href="currencyh.html">
 						<div class="sonPic">
-							<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_6@2x.png" alt="" />
+							<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/app/icon_h_6@2x.png" alt="" />
 						</div>
 						<span>其他维修</span>
 					</a>
 				</div>
 			</div>
-			<!--快速下单-->
-			<div class="fast">
-				<p class="cz fastTitle">30秒快速下单</p>
-				<div class="row sp fastpeople">
-					<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_7@2x.png" alt="" />
-					<input type="text" placeholder="联系人" id="fastName" />
-				</div>
-				<div class="row sp fastPhone">
-					<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_8@2x.png" alt="" />
-					<input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="手机号" id="fastPhone" />
-				</div>
-				<div class="row sp fastCode">
-					<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_9@2x.png" alt="" />
-					<input type="text" onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="验证码" id="fastCode" />
-					<input type="button" class="getCode" id="saveCode" value="获取验证码" />
-				</div>
-				<div class="cz query" id="confirm">
-					<button class="jz">立即下单</button>
-				</div>
-			</div>
-			<!--广告-->
-			<div class="strength">
-				<p class="cz">一盟快修实力</p>
-				<div class="row">
-					<div class="col sp strengthB">
-						<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_11@2x.png" alt="" />
-						<span>一盟快修保障</span>
-					</div>
-					<div class="col sp strengthB">
-						<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_12@2x.png" alt="" />
-						<span>一盟快修保障</span>
-					</div>
-					<div class="col sp strengthB">
-						<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_10@2x.png" alt="" />
-						<span>一盟快修保障</span>
-					</div>
-				</div>
-			</div>
 			<div class="tip"></div>
-			<!--客服-->
-			<div class="pr visit">
-				<img class="talk" src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_15@2x.png" alt="" />
-				<img class="servicer" src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_14@2x.png" alt="" />
-				<a class="sp" href="tel:400-811-5111">一盟快修全国客服热线：400-811-5111</a>
-			</div>
+			<!--快速下单-->
+             <div class="fast">
+             	<div class="fastName">
+             		<span class="left">联系人</span>
+             		<input type="text" maxlength="8" placeholder="姓名(必填)" id="fastName" />
+             	</div>
+             	<div class="fastPhone"> 
+             		<span class="Prefix">+86</span>
+             		<span class="left"> > </span>
+             		<input type=""  maxlength="11"  onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="手机号(必填)" id="fastPhone" />
+             	    <input type="button" class="getCode" id="saveCode" value="获取验证码" />
+             	</div>
+             	<div class="fastCode">
+             		<span class="left">验证码</span>
+             		<input type=""  maxlength="4"  onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="验证码(必填)" id="fastCode" />
+             	</div>
+             	<button class="cz query" id="confirm">快速下单</button>
+             	<div class="sp star">
+             		<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/app/529@2x.png"></img>
+             		<span>下单后，请等待客服回电</span>
+             	</div>
+             </div>
+			<!--广告-->
 			<div class="tip"></div>
 			<!--常见问题-->
 			<div class="problem">
@@ -150,7 +128,7 @@
 						<span>1、一盟快修，维修如何收费？</span>
 						<img class="arrow" src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_17@2x.png" alt="" />
 					</div>
-					<p>按照官网显示的价格进行收费，全国统一价格，个别特殊故障待工程师检测后才 能进一步报价。</p>
+					<p>按照官网显示的价格进行收费，全国统一价格，个别特殊故障待工程师检测后才能进一步报价。</p>
 				</div>
 				<div class="col problemline">
 					<div class="sp pr">
@@ -168,10 +146,10 @@
 				</div>
 				<div class="col problemline">
 					<div class="sp pr">
-						<span>4、一盟快修，有几种下单方式？</span>
+						<span>4、维修价格透明吗？</span>
 						<img class="arrow" src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_17@2x.png" alt="" />
 					</div>
-					<p>一盟快修官网下单、关注一盟微信公众号、微信小程序、400热线渠道下单哦！</p>
+					<p>一盟快修每一单的服务价格公开透明，杜绝水分，保障您的每一分钱都花的值得， 工程师上门维修不收取任何额外服务费。</p>
 				</div>
 				<div class="col problemline">
 					<div class="sp pr">
@@ -182,22 +160,24 @@
 				</div>
 				<div class="col problemline">
 					<div class="sp pr">
-						<span>6、下单时，需要支付维修费用吗？</span>
+						<span>6、一盟快修，苹果手机能单独更换外屏吗？</span>
 						<img class="arrow" src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/h5/icon_h_17@2x.png" alt="" />
 					</div>
-					<p>不需要的，修好手机再付费，修不好，不收费</p>
+					<p>不能，单独更换苹果手机外屏容易造成屏幕失灵、屏幕漏液、翘屏等现象。返修 率高，用户反馈体验差。</p>
 				</div>
 			</div>
-			<!--底部-->
-			<div class="bottom">
-				<ul class="row">
-					<li class="jz"><a href="introduceh.html?sign=1">企业介绍</a></li>
-					<li class="jz"><a href="introduceh.html?sign=2">加入我们</a></li>
-					<li class="jz"><a href="introduceh.html?sign=3">服务流程</a></li>
-				</ul>
+
+			<!-- 提示框 -->
+			<div class="tipWin" id="tipWin">
+				<div id="tips" class="jz cz">
+					<!--<img src="https://ym-program.oss-cn-shanghai.aliyuncs.com/image/app/icon1_30_1@2x.png" alt="" />-->
+					<p id=""></p>
+				</div>
 			</div>
 		</div>
 		<script src="js/jquery-1.12.4.js"></script>
+		<script src="js/commom.js"></script>
+		<script src="js/public.js"></script>
 		<script src="js/indexh.js"></script>
 	</body>
 </html>

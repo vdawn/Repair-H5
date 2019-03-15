@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +9,6 @@
 		<link rel="stylesheet" type="text/css" href="css/adapter.css" />
 		<link rel="stylesheet" type="text/css" href="css/padmodelh.css" />
 	</head>
-
 	<body>
 		<div class="container" id="container">
 			<div class='logo jz'>
@@ -19,15 +17,16 @@
 			<div class='all wrap' id="all">
 				<!--模板-->
 			</div>
-
 		</div>
 		<script src="js/jquery-1.12.4.js"></script>
+		<script src="js/commom.js"></script>
 		<script src="js/artTemplate/template-web.js"></script>
+		<script src="js/public.js"></script>
 		<script src="js/padmodelh.js"></script>
 		<script type="text/html" id="tpl1">
 			{{each data v i}}
-			<div class='jz' id="father" data-serviceId="{{v.serviceId}}" data-model="{{v.serviceName}}">
-				<p>{{v.serviceName}}</p>
+			<div class='jz' id="father" data-serviceId="{{v.id}}" data-model="{{v.name}}">
+				<p>{{v.name}}</p>
 			</div>
 			{{/each}}
 		</script>

@@ -1,9 +1,22 @@
+var fastName;
+var fastPhone;
+var fastCode;
+var fastName;
+var countdown = 60;
+function setTitle() {
+	window.location.href = "om_protocol://setTitle(首页)"
+}
 $(function() {
-	var fastName;
-	var fastPhone;
-	var fastCode;
-	var fastName;
-	var countdown = 60;
+	// LoadUserInfo();
+	setTimeout("setTitle()", 100);
+})
+$(function() {
+	var lis = $('.problemline');
+	lis.click(function() {
+		$(this).children('p').css("display", "block");
+		$(this).siblings().children('p').css("display", "none");
+	})
+	hideBackButton();
 	$("#fastName").blur(function() {
 		fastName = $("#fastName").val()
 	})
@@ -18,7 +31,7 @@ $(function() {
 			if (fastPhone == "" || fastPhone == undefined) {} else {
 				settime(obj);
 				$.ajax({
-					url: 'https://www.topfix.cn/repair-api/sms/out',
+					url: url+'sms/out',
 					type: "POST",
 					xhrFields: {      
 						withCredentials: true    
@@ -27,47 +40,11 @@ $(function() {
 					data: {
 						Phone: fastPhone,
 					},
-					success: function(data) {}
+					success: function(data) {
+						console.log(data)
+					}
 				});
 			}
-		})
-		//确定下单
-	$("#confirm").click(function() {
-			console.log(fastCode)
-			$.ajax({
-				url: 'https://www.topfix.cn/repair-api/sms/Verification',
-				xhrFields: {      
-					withCredentials: true    
-				},
-				crossDomain: true,
-				type: "POST",
-				data: {
-					Verification: fastCode,
-				},
-				success: function(data) {
-					if (data == "ok") {
-						$.ajax({
-							url: 'https://www.topfix.cn/repair-api/order/Quick',
-							type: "POST",
-							headers: {
-								"Content-Type": "application/json;charset=utf-8",
-							},
-							xhrFields: {      
-								withCredentials: true    
-							},
-							crossDomain: true,
-							data: {
-								name: fastName
-							},
-							success: function(data) {
-								if (data == "ok") {
-									location.href = "finishh.html";
-								}
-							}
-						});
-					}
-				}
-			});
 		})
 		//发送验证码倒计时
 	function settime(obj) {
@@ -86,9 +63,69 @@ $(function() {
 			settime(obj)
 		}, 1000)
 	}
-	var lis = $('.problemline');
-	lis.click(function() {
-			$(this).children('p').css("display", "block");
-			$(this).siblings().children('p').css("display", "none");
-	})
 })
+		//确定下单
+$("#confirm").click(function(){
+		LoadUserInfo()
+		
+})
+function setUserInfo(userInfo, token) {
+		$("#aaa").html(token)
+	if (token == "" || token == null || token == undefined) {
+			login()
+	}else{
+		$("#bbb").html(token)
+		if(fastName==""||fastName==null || fastName == undefined){
+            $("#tipWin").css('display', 'block');
+            $("#tips").text('请输入姓名');
+            setTimeout(function() {
+                $("#tipWin").css('display', 'none');
+            }, 2000);
+		}else{
+			$("#ccc").html(token)
+			$.ajax({
+				url: url+'sms/Verification',
+				xhrFields: {      
+					withCredentials: true    
+				},
+				crossDomain: true,
+				type: "POST",
+				data: {
+					phone: fastPhone,
+					verification: fastCode,
+				},
+				success: function(data) {
+					console.log(data)
+					if (data.message == "Ok") {
+						var dataConfirm={
+							  source:"APP",
+                              user:{
+                                "phone":fastPhone,
+                                "name": fastName
+                              }
+						}
+						$.ajax({
+							url: url+'order/Quick',
+							type: "POST",
+							headers: {
+								"token": token
+							},
+							contentType: "application/json",
+     						data: JSON.stringify(dataConfirm),
+							success: function(data) {
+								console.log(data)
+									if (data.message == "Ok") {
+									location.href = "finishh.html";
+								}
+							}
+						});
+					}
+				}
+			});
+		}
+
+
+			}
+
+}
+

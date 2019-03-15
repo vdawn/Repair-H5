@@ -10,17 +10,20 @@
 		<link rel="stylesheet" type="text/css" href="css/modelh.css" />
 	</head>
 	<body>
+		<!--<p id="aaa"></p>-->
 		<div class="container col jz" id="container">
 			<!--模板-->
         </div>
 		<script src="js/jquery-1.12.4.js"></script>
+		<script src="js/commom.js"></script>
 		<script src="js/artTemplate/template-web.js"></script>
+		<script src="js/public.js"></script>
 		<script src="js/modelh.js"></script>
 		<script type="text/html" id="tpl1">
 			{{each data v i}}
-			<div class='father sp' id="father" data-serviceId="{{v.serviceId}}" data-model="{{v.serviceName}}">
-				<img  src="{{v.serviceImg}}" alt="" />
-				<span>{{v.serviceName}}</span>
+			<div class='father sp' id="father" data-serviceId="{{v.id}}" data-model="{{v.name}}">
+				<img  src="{{v.img}}" alt=""/>
+				<span>{{v.name}}</span>
 			</div>
 			{{/each}}
 		</script>

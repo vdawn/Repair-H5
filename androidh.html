@@ -20,12 +20,14 @@
 			</div>
 		</div>
 		<script src="js/jquery-1.12.4.js"></script>
+		<script src="js/commom.js"></script>
 		<script src="js/artTemplate/template-web.js"></script>
+		<script src="js/public.js"></script>
 		<script src="js/androidh.js"></script>
 		<script type="text/html" id="tpl1">
 			{{each data v i}}
-			<div class='jz' id="father" data-serviceId="{{v.serviceId}}" data-model="{{v.serviceName}}">
-				<p>{{v.serviceName}}</p>
+			<div class='jz' id="father" data-serviceId="{{v.id}}" data-model="{{v.name}}">
+				<p>{{v.name}}</p>
 			</div>
 			{{/each}}
 		</script>
